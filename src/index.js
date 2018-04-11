@@ -1,2 +1,2 @@
-document.write("Develop Postit!");
+console.log("Develop Postit!");
 console.log($);
