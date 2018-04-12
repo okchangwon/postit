@@ -5,10 +5,15 @@ module.exports = {
   entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, 'public/js'),
-    filename: 'postit.[name].bundle.js',
+    filename: 'postit.[name].bundle.js'
   },
   module: {
     rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: "eslint-loader"
+      },
       { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader" }
     ]
   },
