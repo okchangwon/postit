@@ -10,7 +10,7 @@
 <body>
 
   <!-- 보드 -->
-  <div class="postit-board">
+  <div class="postit-board _postit_board">
 
     <!-- 포스트잇 -->
     <!-- 접을 경우 fold 클래스 추가 -->
@@ -28,7 +28,7 @@
   </div>
 
   <!-- 포스트잇 메뉴 -->
-  <div class="postit-contextmenu" style="left:150px; top:120px;">
+  <div class="postit-contextmenu _postit_contextmenu" style="display:block; left:150px; top:120px;">
     <div class="item normal-type">
       서식 조정 기능
       <div class="sub-item">
@@ -56,19 +56,34 @@
         </select>
       </div>
     </div>
-    <button class="item btn-type">펼치기</button>
+    <button class="item btn-type _btn" data-code="fold">접기</button>
+    <button class="item btn-type _btn" data-code="unfold">펼치기</button>
     <div class="item normal-type">
       <input type="text" maxlength="5" size="2"> 초 후 삭제
     </div>
-    <button class="item btn-type">삭제하기</button>
+    <button class="item btn-type _btn" data-code="delete">삭제하기</button>
   </div>
 
   <!-- 보드 메뉴 -->
-  <div class="postit-contextmenu" style="left:340px; top:120px;">
-    <button class="item btn-type">새로운 포스트잇</button>
-    <button class="item btn-type">포스트일 정렬하기</button>
-    <button class="item btn-type">전체 삭제</button>
+  <div class="postit-contextmenu _global_contextmenu" style="left:340px; top:120px;">
+    <button class="item btn-type _btn" data-code="create">새로운 포스트잇</button>
+    <button class="item btn-type _btn" data-code="sort">포스트일 정렬하기</button>
+    <button class="item btn-type _btn" data-code="empty">전체 삭제</button>
   </div>
+
+  <!-- 포스트잇 템플릿 -->
+  <script type="text/x-postit-template">
+    <div class="postit">
+      <div class="postit-header">
+        <span class="postit-title"></span>
+        <span class="postit-btns">
+          <button class="postit-btn postit-toggle-btn"></button>
+          <button class="postit-btn postit-remove-btn">✕</button>
+        </span>
+      </div>
+      <div class="postit-body"><textarea></textarea></div>
+    </div>
+  </script>
 
 </body>
 </html>
