@@ -11,4 +11,10 @@ export default class View extends EventEmitter {
   _init() {}
   _caching() {}
   _activate() {}
+  _getOffsetFromEvent(e) {
+    return {
+      left: e.clientX,
+      top: e.clientY,
+    };
+  }
 }

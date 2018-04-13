@@ -26,12 +26,12 @@ export default class ContextmenuView extends EventEmitter {
   }
 
   _activate() {
-    this._$window.on("click", this._onClickWindow.bind(this));
+    this._$window.on("mousedown", this._onMousedownWindow.bind(this));
     this._$window.on("resize", this._onResizeWindow.bind(this));
-    this._$el.on("click", "._btn", this._onClickBtn.bind(this));
+    this._$el.on("click contextmenu", "._btn", this._onClickBtn.bind(this));
   }
 
-  _onClickWindow(e) {
+  _onMousedownWindow(e) {
     if($(e.target).closest(this._options.selector).length){
       return;
     }
@@ -48,7 +48,10 @@ export default class ContextmenuView extends EventEmitter {
   _onClickBtn(e) {
     const code = $(e.target).data("code");
 
-    this.emit(code);
+    this.emit(code, e);
+    this.hide();
+
+    e.preventDefault();
   }
 
   _setPosition(offset) {
@@ -75,10 +78,14 @@ export default class ContextmenuView extends EventEmitter {
     this._$el.css(this._offset);
   }
 
+  getOffset() {
+    return this._offset;
+  }
+
   show({offset}) {
     this._visible = true;
     this._setPosition(offset);
-    this._$el.slideDown(50);
+    this._$el.stop().slideDown(50);
   }
 
   hide() {

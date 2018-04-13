@@ -8,10 +8,11 @@
 
 .postit {
     position: absolute;
-    width:250px;
-    height:200px;
-    border: 1px solid #cc0;
-    background-color: #fff666;
+    width: 250px;
+    height: 200px;
+    display: none;
+    border: 1px solid #ccc;
+    background-color: #f4f4f4;
     font-size: 12px;
     font-family: "나눔고딕", "dotum";
 }
@@ -21,19 +22,32 @@
 }
 
 .postit-header {
-    height:25px;
-    line-height:25px;
-    padding: 0 5px 0 10px;
+    height:15px;
+    line-height:15px;
+    padding: 0 3px 0 10px;
     box-sizing: border-box;
+}
+
+.postit-title {
+    display: none;
+    float: left;
+    text-overflow: ellipsis;
+}
+
+.postit.fold .postit-title {
+    display: block;
+    width: 70%;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 .postit-body {
     position: absolute;
     left: 0px;
     right: 0px;
-    top: 25px;
+    top: 15px;
     bottom: 0px;
-    border-top: 1px solid #dd0;
+    border-top: 1px solid #ccc;
     font-size:0;
 }
 
@@ -57,7 +71,6 @@
 
 .postit-btns {
     float: right;
-    margin-top:2px;
 }
 .postit-btns::after {
     content: "";
@@ -69,8 +82,8 @@
     display: inline-block;
     float: left;
     border: 0;
-    width: 20px;
-    height: 20px;
+    width: 15px;
+    height: 15px;
     padding: 0;
     margin: 0;
     background: transparent;
@@ -107,6 +120,7 @@
     font-family: "나눔고딕", "dotum";
     white-space: nowrap;
     display: none;
+    z-index: 10000;
 }
 
 .postit-contextmenu .item {
@@ -144,4 +158,22 @@
 
 .postit-contextmenu input[type=text] {
     outline: none;
+}
+
+.postit[data-bg-color='yellow'] {
+    background-color:#fff666;
+    border-color:#cc0;
+}
+
+.postit[data-bg-color='yellow'] .postit-body {
+    border-top: 1px solid #dd0;
+}
+
+.postit[data-bg-color='blue'] {
+    background-color:#cceeff;
+    border-color:#aabbee;
+}
+
+.postit[data-bg-color='blue'] .postit-body {
+    border-top: 1px solid #aabbee;
 }

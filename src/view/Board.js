@@ -26,19 +26,15 @@ export default class BoardView extends View {
 
     e.preventDefault();
   }
-  _getOffsetFromEvent(e) {
-    return {
-      left: e.clientX,
-      top: e.clientY,
-    };
-  }
   _onCreate() {
-    console.log("새로운 포스트잇");
+    const offset = this._contextmenu.getOffset();
+
+    this.emit("create", offset);
   }
   _onSort() {
-    console.log("포스트잇 정렬하기");
+    this.emit("sort");
   }
   _onEmpty() {
-    console.log("전체 삭제");
+    this.emit("empty");
   }
 }
