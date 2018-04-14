@@ -4,7 +4,7 @@ const path = require('path');
 module.exports = {
   entry: './src/index.js',
   output: {
-    path: path.resolve(__dirname, 'public/js'),
+    path: path.resolve(__dirname, 'dist'),
     filename: 'postit.[name].bundle.js'
   },
   module: {
@@ -34,8 +34,8 @@ module.exports = {
     }
   },
   devServer: {
-    contentBase: path.join(__dirname, "public"),
-    publicPath: "/js",
+    contentBase: __dirname,
+    publicPath: "/dist",
     port: 9000,
     open: true
   }
