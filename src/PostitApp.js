@@ -17,19 +17,23 @@ export default class Controller {
       .on("fold", this._onFold.bind(this))
       .on("remove", this._onRemove.bind(this))
       .on("changeText", this._onChangeText.bind(this))
-      .on("contextmenu", this._onContextmenu.bind(this));
-
-    this._postitView
+      .on("contextmenu", this._onContextmenu.bind(this))
       .on("changeBgColor", this._onChangeBgColor.bind(this))
       .on("changeTextSize", this._onChangeTextSize.bind(this))
       .on("changeTextColor", this._onChangeTextColor.bind(this))
-      .on("setPostitTimer", this._onSetPostitTimer.bind(this));
+      .on("setPostitTimer", this._onSetPostitTimer.bind(this))
+      .on("adjustPosition", this._onAdjustPosition.bind(this))
+      .on("adjustSize", this._onAdjustSize.bind(this))
+      .on("toFront", this._onToFront.bind(this))
+      .on("resizePostit", this._onResizePostit.bind(this))
+      .on("movePostit", this._onMovePostit.bind(this));
   }
   _load() {
     const postits = this._store.load() || [];
     postits.forEach(postitData => {
       this._store.create(postitData, postit => {
         this._postitView.render(postit);
+        this._initPostitTimer(postit.id, postit.timer);
       });
     });
   }
@@ -43,8 +47,12 @@ export default class Controller {
       this._postitView.render(postit);
     });
   }
-  _onSort() {
-    console.log("포스트잇 정렬하기");
+  _onSort(bounds) {
+    this._store.sort(bounds, postits =>
+      postits.forEach(postit => {
+        this._postitView.render(postit);
+      })
+    );
   }
   _onEmpty() {
     this._store.empty(() => {
@@ -95,10 +103,78 @@ export default class Controller {
     this._postitView.render(postit);
   }
   _onSetPostitTimer(postitId, timer){
-    setTimeout(() => {
-      this._store.remove(postitId, () => {
-        this._postitView.remove(postitId);
-      });
-    }, timer * 1000);
+    this._initPostitTimer(postitId, timer);
+  }
+  _initPostitTimer(postitId, timer){
+    const postit = this._store.find(postitId);
+
+    if(!postit || timer < 0) {
+      return;
+    }
+
+    if(postit._interval){
+      clearInterval(postit._interval);
+      postit._interval = null;
+    }
+
+    this._store.update(postit.id, {timer});
+    this._postitView.render(postit);
+
+    postit._interval = setInterval(() => {
+      timer--;
+
+      if(timer >= 0) {
+        this._store.update(postit.id, {timer});
+        this._postitView.render(postit);
+      }
+
+      if(timer === 0) {
+        clearInterval(postit._interval);
+        postit._interval = null;
+
+        this._store.remove(postit.id, () => {
+          this._postitView.remove(postit.id);
+        });
+      }
+    }, 1000);
+  }
+  _onAdjustPosition(postitId, left, top){
+    const postit = this._store.find(postitId);
+
+    this._store.update(postitId, {
+      left,
+      top
+    });
+    this._postitView.render(postit);
+  }
+  _onAdjustSize(postitId, width, height){
+    const postit = this._store.find(postitId);
+
+    this._store.update(postitId, {
+      width,
+      height
+    });
+    this._postitView.render(postit);
+  }
+  _onToFront(postitId){
+    this._store.toFront(postitId, postitIds => {
+      this._postitView.updateZindex(postitIds);
+    });
+  }
+  _onResizePostit(postitId, widthDiff, heightDiff){
+    const postit = this._store.find(postitId);
+
+    this._store.update(postitId, {
+      width: postit.width + widthDiff,
+      height: postit.height + heightDiff
+    });
+  }
+  _onMovePostit(postitId, left, top){
+    const postit = this._store.find(postitId);
+
+    this._store.update(postitId, {
+      left, top
+    });
+    this._postitView.render(postit);
   }
 }

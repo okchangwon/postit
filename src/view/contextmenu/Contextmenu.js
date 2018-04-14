@@ -36,7 +36,9 @@ export default class ContextmenuView extends EventEmitter {
       return;
     }
 
-    this.hide();
+    if(this._visible) {
+      this.hide();
+    }
   }
 
   _onResizeWindow() {
@@ -76,6 +78,10 @@ export default class ContextmenuView extends EventEmitter {
 
     this._offset = {left, top};
     this._$el.css(this._offset);
+  }
+
+  isVisible() {
+    return this._visible;
   }
 
   getOffset() {

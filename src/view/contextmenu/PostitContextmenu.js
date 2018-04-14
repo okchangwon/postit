@@ -36,13 +36,18 @@ export default class PostitContextmenuView extends Contextmenu {
     super.show({offset});
 
     this.postitId = postit.id;
-
+    this.update(postit);
+  }
+  update(postit) {
     this._$textColor.val(postit.textColor);
     this._$textSize.val(postit.textSize);
     this._$bgColor.val(postit.bgColor);
     this._$fold.toggle(!postit.fold);
     this._$unfold.toggle(postit.fold);
-    this._$timer.val(0);
+
+    if(!this._$timer.is(":focus")){
+      this._$timer.val(postit.timer > 0 ? postit.timer : 0);
+    }
   }
   hide() {
     super.hide();

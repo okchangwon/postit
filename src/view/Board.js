@@ -9,11 +9,13 @@ export default class BoardView extends View {
     this._$el = $("._postit_board").eq(0);
   }
   _activate () {
-    this._$el.on("contextmenu", this._onContextmenu.bind(this));
+    this._$el
+      .on("contextmenu", this._onContextmenu.bind(this));
 
-    this._contextmenu.on("create", this._onCreate.bind(this));
-    this._contextmenu.on("sort", this._onSort.bind(this));
-    this._contextmenu.on("empty", this._onEmpty.bind(this));
+    this._contextmenu
+      .on("create", this._onCreate.bind(this))
+      .on("sort", this._onSort.bind(this))
+      .on("empty", this._onEmpty.bind(this));
   }
   _onContextmenu (e) {
     if(!this._$el.is(e.target)) {
@@ -32,7 +34,12 @@ export default class BoardView extends View {
     this.emit("create", offset);
   }
   _onSort() {
-    this.emit("sort");
+    const bounds = {
+      width: this._$el.width(),
+      height: this._$el.height(),
+    };
+
+    this.emit("sort", bounds);
   }
   _onEmpty() {
     this.emit("empty");

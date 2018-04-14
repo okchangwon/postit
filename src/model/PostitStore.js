@@ -27,6 +27,11 @@ export default class PostitStore extends EventEmitter {
     if(postit) {
       this._list.splice(this._list.indexOf(postit), 1);
 
+      if(postit._interval){
+        clearInterval(postit._interval);
+        postit._interval = null;
+      }
+
       this.save();
 
       typeof callback === "function" && callback();
@@ -46,5 +51,42 @@ export default class PostitStore extends EventEmitter {
   }
   load(){
     return JSON.parse(localStorage.getItem("postits"));
+  }
+  toFront(postitId, callback){
+    const frontPostit = this.find(postitId);
+    const list = this._list.slice();
+
+    list.splice(list.indexOf(frontPostit), 1);
+    list.push(frontPostit);
+    list.forEach((postit, index) => {
+      postit.sort = index;
+    });
+
+    this.save();
+
+    typeof callback === "function" && callback(list.map(postit => postit.id));
+  }
+  sort(bounds, callback){
+    const gap = 20;
+
+    this._list.forEach((postit, index) => {
+      const boundSize = Math.min(bounds.width - postit.width, bounds.height - postit.height) - gap;
+      const cnt = Math.floor(boundSize / gap);
+      const maxSize = cnt * gap;
+      let left = index * gap;
+      let top = index * gap;
+
+      left = (left % maxSize) + (Math.floor(left / maxSize) * gap);
+      left %= Math.floor((bounds.width - postit.width) / gap) * gap;
+      top %= maxSize;
+
+      postit.left = left + gap;
+      postit.top = top + gap;
+      postit.sort = index;
+    });
+
+    this.save();
+
+    typeof callback === "function" && callback(this._list);
   }
 }
