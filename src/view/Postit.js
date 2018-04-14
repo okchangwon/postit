@@ -133,13 +133,17 @@ export default class PostitView extends View {
     const postitId = Number($postit.data("id"));
 
     this._draggingPostitId = postitId;
+    this._draggingStartPoint = {
+      left: parseInt($postit.css("left"), 10),
+      top: parseInt($postit.css("top"), 10),
+      clientX: e.clientX,
+      clientY: e.clientY
+    }
   }
   _onMousemoveWindow(e){
     if(this._draggingPostitId) {
-      const $postit = this._$board.find(`._postit[data-id='${this._draggingPostitId}']`);
-      const event = e.originalEvent;
-      const left = parseInt($postit.css("left"), 10) + event.movementX;
-      const top = parseInt($postit.css("top"), 10) + event.movementY;
+      const left = e.clientX - (this._draggingStartPoint.clientX - this._draggingStartPoint.left);
+      const top = e.clientY - (this._draggingStartPoint.clientY - this._draggingStartPoint.top);
 
       this.emit("movePostit", this._draggingPostitId, left, top);
     }
