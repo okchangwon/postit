@@ -106,6 +106,7 @@ export default class PostitView extends View {
     this.emit("changeTextColor", postitId, textColor);
   }
   _onHideContextmenu(postitId, timer){
+    console.log("_onHideContextmenu", postitId, timer);
     if(timer) {
       this.emit("setPostitTimer", postitId, timer);
     }
@@ -127,8 +128,6 @@ export default class PostitView extends View {
       textareaWidth: parseInt($textarea.width(), 10),
       textareaHeight: parseInt($textarea.height(), 10)
     });
-
-    console.log("mousedown");
   }
   _onMousedownHeader(e){
     const $postit = $(e.currentTarget).closest("._postit");

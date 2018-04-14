@@ -50,8 +50,9 @@ export default class ContextmenuView extends EventEmitter {
   _onClickBtn(e) {
     const code = $(e.target).data("code");
 
-    this.emit(code, e);
     this.hide();
+
+    this.emit(code, e);
 
     e.preventDefault();
   }
