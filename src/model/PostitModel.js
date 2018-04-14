@@ -23,4 +23,10 @@ export default class PostitModel {
   set (data) {
     Object.assign(this, data);
   }
+  resetDefaultSize() {
+    this.set({
+      width: DEFAULT_DATA.width,
+      height: DEFAULT_DATA.height,
+    });
+  }
 }

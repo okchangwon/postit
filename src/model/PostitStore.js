@@ -70,6 +70,8 @@ export default class PostitStore extends EventEmitter {
     const gap = 20;
 
     this._list.forEach((postit, index) => {
+      postit.resetDefaultSize();
+
       const boundSize = Math.min(bounds.width - postit.width, bounds.height - postit.height) - gap;
       const cnt = Math.floor(boundSize / gap);
       const maxSize = cnt * gap;
