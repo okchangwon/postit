@@ -106,7 +106,6 @@ export default class PostitView extends View {
     this.emit("changeTextColor", postitId, textColor);
   }
   _onHideContextmenu(postitId, timer){
-    console.log("_onHideContextmenu", postitId, timer);
     if(timer) {
       this.emit("setPostitTimer", postitId, timer);
     }
