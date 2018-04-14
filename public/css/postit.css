@@ -175,6 +175,10 @@
     border-top: 1px solid #dd0;
 }
 
+.postit-select-bgcolor[data-value='yellow'] {
+    background-color:#fff666;
+}
+
 .postit[data-bg-color='blue'] {
     background-color:#cceeff;
     border-color:#aabbee;
@@ -183,3 +187,19 @@
 .postit[data-bg-color='blue'] .postit-body {
     border-top: 1px solid #aabbee;
 }
+
+.postit-select-bgcolor[data-value='blue'] {
+    background-color:#cceeff;
+}
+
+.postit-select-textcolor[data-value='black'] {
+    background-color:black;
+    color:#fff;
+}
+
+.postit-select-textcolor[data-value='red'] {
+    background-color:red;
+    color:#fff;
+}
+
+

@@ -24,13 +24,17 @@ export default class PostitContextmenuView extends Contextmenu {
     this._$textColor.on("change", this._onChangeTextColor.bind(this));
   }
   _onChangeBgColor(){
-    this.emit("changeBgColor", this._$bgColor.val());
+    const bgColor = this._$bgColor.val();
+    this._$bgColor.attr("data-value", bgColor);
+    this.emit("changeBgColor", bgColor);
   }
   _onChangeTextSize(){
     this.emit("changeTextSize", this._$textSize.val());
   }
   _onChangeTextColor(){
-    this.emit("changeTextColor", this._$textColor.val());
+    const textColor = this._$textColor.val();
+    this._$textColor.attr("data-value", textColor);
+    this.emit("changeTextColor", textColor);
   }
   show({offset, postit}) {
     super.show({offset});
@@ -44,6 +48,9 @@ export default class PostitContextmenuView extends Contextmenu {
     this._$bgColor.val(postit.bgColor);
     this._$fold.toggle(!postit.fold);
     this._$unfold.toggle(postit.fold);
+
+    this._$bgColor.attr("data-value", postit.bgColor);
+    this._$textColor.attr("data-value", postit.textColor);
 
     if(!this._$timer.is(":focus")){
       this._$timer.val(postit.timer > 0 ? postit.timer : 0);
