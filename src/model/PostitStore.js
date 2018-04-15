@@ -56,6 +56,7 @@ export default class PostitStore extends EventEmitter {
     const frontPostit = this.find(postitId);
     const list = this._list.slice();
 
+    list.sort((a, b) => a.sort - b.sort);
     list.splice(list.indexOf(frontPostit), 1);
     list.push(frontPostit);
     list.forEach((postit, index) => {
