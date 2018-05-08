@@ -12,9 +12,13 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: "eslint-loader"
-      },
-      { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader" }
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['env']
+          }
+        }
+      }
     ]
   },
   plugins: [
@@ -32,11 +36,5 @@ module.exports = {
         }
       }
     }
-  },
-  devServer: {
-    contentBase: __dirname,
-    publicPath: "/dist",
-    port: 9000,
-    open: true
   }
 };

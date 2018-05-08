@@ -24,10 +24,10 @@ export default class PostitStore extends EventEmitter {
   remove(postitId, callback) {
     const postit = this.find(postitId);
 
-    if(postit) {
+    if (postit) {
       this._list.splice(this._list.indexOf(postit), 1);
 
-      if(postit._interval){
+      if (postit._interval) {
         clearInterval(postit._interval);
         postit._interval = null;
       }
@@ -46,13 +46,13 @@ export default class PostitStore extends EventEmitter {
 
     this.save();
   }
-  save(){
+  save() {
     localStorage.setItem("postits", JSON.stringify(this._list));
   }
-  load(){
+  load() {
     return JSON.parse(localStorage.getItem("postits"));
   }
-  toFront(postitId, callback){
+  toFront(postitId, callback) {
     const frontPostit = this.find(postitId);
     const list = this._list.slice();
 
@@ -67,7 +67,7 @@ export default class PostitStore extends EventEmitter {
 
     typeof callback === "function" && callback(list.map(postit => postit.id));
   }
-  sort(bounds, callback){
+  sort(bounds, callback) {
     const gap = 20;
 
     this._list.forEach((postit, index) => {

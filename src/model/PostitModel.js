@@ -14,13 +14,13 @@ const DEFAULT_DATA = {
 let sort = 0;
 
 export default class PostitModel {
-  constructor (data) {
+  constructor(data) {
     this.id = this.id || data.id || new Date().getTime();
     this.sort = ++sort;
 
     Object.assign(this, DEFAULT_DATA, data);
   }
-  set (data) {
+  set(data) {
     Object.assign(this, data);
   }
   resetDefaultSize() {

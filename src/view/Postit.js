@@ -35,7 +35,7 @@ export default class PostitView extends View {
       .on("mousemove", this._onMousemoveWindow.bind(this))
       .on("mouseup", this._onMouseupWindow.bind(this));
   }
-  _onContextmenu (e) {
+  _onContextmenu(e) {
     const $postit = $(e.currentTarget);
     const postitId = Number($postit.data("id"));
     const offset = this._getOffsetFromEvent(e);
@@ -44,7 +44,7 @@ export default class PostitView extends View {
 
     e.preventDefault();
   }
-  openContextmenu (offset, postit) {
+  openContextmenu(offset, postit) {
     this._contextmenu.show({
       offset,
       postit
@@ -85,39 +85,39 @@ export default class PostitView extends View {
 
     this.emit("changeText", postitId, text);
   }
-  _onFold(){
+  _onFold() {
     const postitId = this._contextmenu.postitId;
     this.emit("fold", postitId);
   }
-  _onRemove(){
+  _onRemove() {
     const postitId = this._contextmenu.postitId;
     this.emit("remove", postitId);
   }
-  _onChangeBgColor(bgColor){
+  _onChangeBgColor(bgColor) {
     const postitId = this._contextmenu.postitId;
     this.emit("changeBgColor", postitId, bgColor);
   }
-  _onChangeTextSize(textSize){
+  _onChangeTextSize(textSize) {
     const postitId = this._contextmenu.postitId;
     this.emit("changeTextSize", postitId, textSize);
   }
-  _onChangeTextColor(textColor){
+  _onChangeTextColor(textColor) {
     const postitId = this._contextmenu.postitId;
     this.emit("changeTextColor", postitId, textColor);
   }
-  _onHideContextmenu(postitId, timer){
-    if(timer) {
+  _onHideContextmenu(postitId, timer) {
+    if (timer) {
       this.emit("setPostitTimer", postitId, timer);
     }
   }
-  _onResizeWindow(){
+  _onResizeWindow() {
     const $postits = this._$board.find("._postit");
 
     $postits.each((idx, postitElement) => {
       this._adjustPosition($(postitElement));
     });
   }
-  _onMousedownTextarea(e){
+  _onMousedownTextarea(e) {
     const $textarea = $(e.currentTarget);
     const $postit = $textarea.closest("._postit");
 
@@ -128,7 +128,7 @@ export default class PostitView extends View {
       textareaHeight: parseInt($textarea.height(), 10)
     });
   }
-  _onMousedownHeader(e){
+  _onMousedownHeader(e) {
     const $postit = $(e.currentTarget).closest("._postit");
     const postitId = Number($postit.data("id"));
 
@@ -140,18 +140,18 @@ export default class PostitView extends View {
       clientY: e.clientY
     }
   }
-  _onMousemoveWindow(e){
-    if(this._draggingPostitId) {
+  _onMousemoveWindow(e) {
+    if (this._draggingPostitId) {
       const left = e.clientX - (this._draggingStartPoint.clientX - this._draggingStartPoint.left);
       const top = e.clientY - (this._draggingStartPoint.clientY - this._draggingStartPoint.top);
 
       this.emit("movePostit", this._draggingPostitId, left, top);
     }
   }
-  _onMouseupWindow(){
+  _onMouseupWindow() {
     const $selectedPostit = this._$board.find(`._postit.selected`);
 
-    if($selectedPostit.length) {
+    if ($selectedPostit.length) {
       const $textarea = $selectedPostit.find("._text");
       const widthDiff = $textarea.width() - $selectedPostit.data("textareaWidth");
       const heightDiff = $textarea.height() - $selectedPostit.data("textareaHeight");
@@ -165,7 +165,7 @@ export default class PostitView extends View {
       $selectedPostit.removeClass("selected");
     }
 
-    if(this._draggingPostitId) {
+    if (this._draggingPostitId) {
       this._draggingPostitId = null;
     }
   }
@@ -180,7 +180,7 @@ export default class PostitView extends View {
     const left = Math.max(0, Math.min(originalLeft, docWidth - width));
     const top = Math.max(0, Math.min(originalTop, docHeight - height));
 
-    if(originalLeft !== left || originalTop !== top){
+    if (originalLeft !== left || originalTop !== top) {
       this.emit("adjustPosition",
         postitId,
         left,
@@ -190,14 +190,14 @@ export default class PostitView extends View {
 
     this._adjustSize($postit);
   }
-  _adjustSize($postit){
+  _adjustSize($postit) {
     const postitId = $postit.attr("data-id");
     const docWidth = this._$document.width();
     const docHeight = this._$document.height();
     const width = $postit.width();
     const height = $postit.height();
 
-    if(width > docWidth || height > docHeight){
+    if (width > docWidth || height > docHeight) {
       this.emit("adjustSize",
         postitId,
         Math.min(width, docWidth),
@@ -209,16 +209,16 @@ export default class PostitView extends View {
     const $postit = this._find(postit.id) || this._create(postit);
     const $text = $postit.find("._text");
 
-    if($text.val() !== postit.text){
+    if ($text.val() !== postit.text) {
       $text.val(postit.text)
     }
 
     $text.css({
-        width: postit.width - 2,
-        height: postit.height - 16,
-        color: postit.textColor,
-        "font-size": `${postit.textSize}px`
-      });
+      width: postit.width - 2,
+      height: postit.height - 16,
+      color: postit.textColor,
+      "font-size": `${postit.textSize}px`
+    });
 
     $postit
       .find("._remain_time")
@@ -232,7 +232,7 @@ export default class PostitView extends View {
         color: postit.textColor
       });
 
-    if($postit.is(":visible") && !this._draggingPostitId){
+    if ($postit.is(":visible") && !this._draggingPostitId) {
       $postit
         .stop(true, true)
         .animate({
@@ -241,7 +241,7 @@ export default class PostitView extends View {
         }, 100, () => {
           this._adjustPosition($postit);
         });
-    }else {
+    } else {
       $postit
         .css({
           left: postit.left,
@@ -250,9 +250,9 @@ export default class PostitView extends View {
       this._adjustPosition($postit);
     }
 
-    if(postit.timer &&
+    if (postit.timer &&
       this._contextmenu.isVisible() &&
-      this._contextmenu.postitId === postit.id){
+      this._contextmenu.postitId === postit.id) {
       this._contextmenu.update(postit);
     }
 
@@ -269,11 +269,11 @@ export default class PostitView extends View {
   }
   remove(postitId) {
     this._$board.find(`._postit[data-id='${postitId}']`).remove();
-    if(postitId === this._contextmenu.postitId){
+    if (postitId === this._contextmenu.postitId) {
       this._contextmenu.hide();
     }
   }
-  updateZindex(postitIds){
+  updateZindex(postitIds) {
     postitIds.forEach((postitId, index) => {
       this._$board
         .find(`._postit[data-id='${postitId}']`)

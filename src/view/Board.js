@@ -2,13 +2,13 @@ import View from "./View";
 import GlobalContextmenu from "./contextmenu/GlobalContextmenu";
 
 export default class BoardView extends View {
-  _init () {
+  _init() {
     this._contextmenu = new GlobalContextmenu();
   }
-  _caching () {
+  _caching() {
     this._$el = $("._postit_board").eq(0);
   }
-  _activate () {
+  _activate() {
     this._$el
       .on("contextmenu", this._onContextmenu.bind(this));
 
@@ -17,8 +17,8 @@ export default class BoardView extends View {
       .on("sort", this._onSort.bind(this))
       .on("empty", this._onEmpty.bind(this));
   }
-  _onContextmenu (e) {
-    if(!this._$el.is(e.target)) {
+  _onContextmenu(e) {
+    if (!this._$el.is(e.target)) {
       return;
     }
 

@@ -23,21 +23,21 @@ export default class PostitContextmenuView extends Contextmenu {
     this._$textSize.on("change", this._onChangeTextSize.bind(this));
     this._$textColor.on("change", this._onChangeTextColor.bind(this));
   }
-  _onChangeBgColor(){
+  _onChangeBgColor() {
     const bgColor = this._$bgColor.val();
     this._$bgColor.attr("data-value", bgColor);
     this.emit("changeBgColor", bgColor);
   }
-  _onChangeTextSize(){
+  _onChangeTextSize() {
     this.emit("changeTextSize", this._$textSize.val());
   }
-  _onChangeTextColor(){
+  _onChangeTextColor() {
     const textColor = this._$textColor.val();
     this._$textColor.attr("data-value", textColor);
     this.emit("changeTextColor", textColor);
   }
-  show({offset, postit}) {
-    super.show({offset});
+  show({ offset, postit }) {
+    super.show({ offset });
 
     this.postitId = postit.id;
     this.update(postit);
@@ -52,7 +52,7 @@ export default class PostitContextmenuView extends Contextmenu {
     this._$bgColor.attr("data-value", postit.bgColor);
     this._$textColor.attr("data-value", postit.textColor);
 
-    if(!this._$timer.is(":focus")){
+    if (!this._$timer.is(":focus")) {
       this._$timer.val(postit.timer > 0 ? postit.timer : 0);
     }
   }

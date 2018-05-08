@@ -32,17 +32,17 @@ export default class ContextmenuView extends EventEmitter {
   }
 
   _onMousedownWindow(e) {
-    if($(e.target).closest(this._options.selector).length){
+    if ($(e.target).closest(this._options.selector).length) {
       return;
     }
 
-    if(this._visible) {
+    if (this._visible) {
       this.hide();
     }
   }
 
   _onResizeWindow() {
-    if(this._visible){
+    if (this._visible) {
       this._adjustPosition();
     }
   }
@@ -65,7 +65,7 @@ export default class ContextmenuView extends EventEmitter {
     const left = offset.left > docWidth - width ? offset.left - width : offset.left;
     const top = offset.top > docHeight - height ? offset.top - height : offset.top;
 
-    this._offset = {left, top};
+    this._offset = { left, top };
     this._$el.css(this._offset);
   }
 
@@ -77,7 +77,7 @@ export default class ContextmenuView extends EventEmitter {
     const left = Math.min(this._offset.left, docWidth - width);
     const top = Math.min(this._offset.top, docHeight - height);
 
-    this._offset = {left, top};
+    this._offset = { left, top };
     this._$el.css(this._offset);
   }
 
@@ -89,14 +89,14 @@ export default class ContextmenuView extends EventEmitter {
     return this._offset;
   }
 
-  show({offset}) {
+  show({ offset }) {
     this._visible = true;
     this._setPosition(offset);
     this._$el.stop().slideDown(50);
   }
 
   hide() {
-    if(this._visible) {
+    if (this._visible) {
       this._visible = false;
       this._$el.fadeOut(150);
     }

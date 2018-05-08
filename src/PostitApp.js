@@ -62,7 +62,7 @@ export default class Controller {
   _onFold(postitId) {
     const postit = this._store.find(postitId);
 
-    this._store.update(postitId, {fold: !postit.fold});
+    this._store.update(postitId, { fold: !postit.fold });
 
     this._postitView.render(postit);
   }
@@ -74,61 +74,61 @@ export default class Controller {
   _onChangeText(postitId, text) {
     const postit = this._store.find(postitId);
 
-    if(postit.text !== text){
-      this._store.update(postitId, {text});
+    if (postit.text !== text) {
+      this._store.update(postitId, { text });
       this._postitView.render(postit);
     }
   }
-  _onContextmenu(offset, postitId){
+  _onContextmenu(offset, postitId) {
     const postit = this._store.find(postitId);
 
     this._postitView.openContextmenu(offset, postit);
   }
-  _onChangeBgColor(postitId, bgColor){
+  _onChangeBgColor(postitId, bgColor) {
     const postit = this._store.find(postitId);
 
-    this._store.update(postitId, {bgColor});
+    this._store.update(postitId, { bgColor });
     this._postitView.render(postit);
   }
-  _onChangeTextSize(postitId, textSize){
+  _onChangeTextSize(postitId, textSize) {
     const postit = this._store.find(postitId);
 
-    this._store.update(postitId, {textSize});
+    this._store.update(postitId, { textSize });
     this._postitView.render(postit);
   }
-  _onChangeTextColor(postitId, textColor){
+  _onChangeTextColor(postitId, textColor) {
     const postit = this._store.find(postitId);
 
-    this._store.update(postitId, {textColor});
+    this._store.update(postitId, { textColor });
     this._postitView.render(postit);
   }
-  _onSetPostitTimer(postitId, timer){
+  _onSetPostitTimer(postitId, timer) {
     this._initPostitTimer(postitId, timer);
   }
-  _initPostitTimer(postitId, timer){
+  _initPostitTimer(postitId, timer) {
     const postit = this._store.find(postitId);
 
-    if(!postit || timer < 0) {
+    if (!postit || timer < 0) {
       return;
     }
 
-    if(postit._interval){
+    if (postit._interval) {
       clearInterval(postit._interval);
       postit._interval = null;
     }
 
-    this._store.update(postit.id, {timer});
+    this._store.update(postit.id, { timer });
     this._postitView.render(postit);
 
     postit._interval = setInterval(() => {
       timer--;
 
-      if(timer >= 0) {
-        this._store.update(postit.id, {timer});
+      if (timer >= 0) {
+        this._store.update(postit.id, { timer });
         this._postitView.render(postit);
       }
 
-      if(timer === 0) {
+      if (timer === 0) {
         clearInterval(postit._interval);
         postit._interval = null;
 
@@ -138,7 +138,7 @@ export default class Controller {
       }
     }, 1000);
   }
-  _onAdjustPosition(postitId, left, top){
+  _onAdjustPosition(postitId, left, top) {
     const postit = this._store.find(postitId);
 
     this._store.update(postitId, {
@@ -147,7 +147,7 @@ export default class Controller {
     });
     this._postitView.render(postit);
   }
-  _onAdjustSize(postitId, width, height){
+  _onAdjustSize(postitId, width, height) {
     const postit = this._store.find(postitId);
 
     this._store.update(postitId, {
@@ -156,12 +156,12 @@ export default class Controller {
     });
     this._postitView.render(postit);
   }
-  _onToFront(postitId){
+  _onToFront(postitId) {
     this._store.toFront(postitId, postitIds => {
       this._postitView.updateZindex(postitIds);
     });
   }
-  _onResizePostit(postitId, widthDiff, heightDiff){
+  _onResizePostit(postitId, widthDiff, heightDiff) {
     const postit = this._store.find(postitId);
 
     this._store.update(postitId, {
@@ -169,7 +169,7 @@ export default class Controller {
       height: postit.height + heightDiff
     });
   }
-  _onMovePostit(postitId, left, top){
+  _onMovePostit(postitId, left, top) {
     const postit = this._store.find(postitId);
 
     this._store.update(postitId, {
