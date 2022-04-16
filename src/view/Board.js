@@ -9,8 +9,7 @@ export default class BoardView extends View {
     this._$el = $("._postit_board").eq(0);
   }
   _activate() {
-    this._$el
-      .on("contextmenu", this._onContextmenu.bind(this));
+    this._$el.on("contextmenu", this._onContextmenu.bind(this));
 
     this._contextmenu
       .on("create", this._onCreate.bind(this))

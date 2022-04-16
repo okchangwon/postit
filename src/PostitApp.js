@@ -41,7 +41,7 @@ export default class Controller {
     this._store.create({}, postit => {
       this._store.update(postit.id, {
         left: offset.left,
-        top: offset.top
+        top: offset.top,
       });
 
       this._postitView.render(postit);
@@ -51,7 +51,7 @@ export default class Controller {
     this._store.sort(bounds, postits =>
       postits.forEach(postit => {
         this._postitView.render(postit);
-      })
+      }),
     );
   }
   _onEmpty() {
@@ -143,7 +143,7 @@ export default class Controller {
 
     this._store.update(postitId, {
       left,
-      top
+      top,
     });
     this._postitView.render(postit);
   }
@@ -152,7 +152,7 @@ export default class Controller {
 
     this._store.update(postitId, {
       width,
-      height
+      height,
     });
     this._postitView.render(postit);
   }
@@ -166,14 +166,15 @@ export default class Controller {
 
     this._store.update(postitId, {
       width: postit.width + widthDiff,
-      height: postit.height + heightDiff
+      height: postit.height + heightDiff,
     });
   }
   _onMovePostit(postitId, left, top) {
     const postit = this._store.find(postitId);
 
     this._store.update(postitId, {
-      left, top
+      left,
+      top,
     });
     this._postitView.render(postit);
   }

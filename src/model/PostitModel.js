@@ -8,7 +8,7 @@ const DEFAULT_DATA = {
   top: 0,
   timer: -1,
   width: 250,
-  height: 200
+  height: 200,
 };
 
 let sort = 0;

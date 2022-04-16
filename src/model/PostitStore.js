@@ -79,7 +79,7 @@ export default class PostitStore extends EventEmitter {
       let left = index * gap;
       let top = index * gap;
 
-      left = (left % maxSize) + (Math.floor(left / maxSize) * gap);
+      left = (left % maxSize) + Math.floor(left / maxSize) * gap;
       left %= Math.floor((bounds.width - postit.width) / gap) * gap;
       top %= maxSize;
 

@@ -47,7 +47,7 @@ export default class PostitView extends View {
   openContextmenu(offset, postit) {
     this._contextmenu.show({
       offset,
-      postit
+      postit,
     });
   }
   _find(id) {
@@ -56,9 +56,7 @@ export default class PostitView extends View {
     return $postit.length ? $postit : null;
   }
   _create(postit) {
-    return $(this._template)
-      .attr("data-id", postit.id)
-      .appendTo(this._$board);
+    return $(this._template).attr("data-id", postit.id).appendTo(this._$board);
   }
   _onMousedownPostit(e) {
     const $postit = $(e.currentTarget);
@@ -125,7 +123,7 @@ export default class PostitView extends View {
 
     $postit.data({
       textareaWidth: parseInt($textarea.width(), 10),
-      textareaHeight: parseInt($textarea.height(), 10)
+      textareaHeight: parseInt($textarea.height(), 10),
     });
   }
   _onMousedownHeader(e) {
@@ -137,8 +135,8 @@ export default class PostitView extends View {
       left: parseInt($postit.css("left"), 10),
       top: parseInt($postit.css("top"), 10),
       clientX: e.clientX,
-      clientY: e.clientY
-    }
+      clientY: e.clientY,
+    };
   }
   _onMousemoveWindow(e) {
     if (this._draggingPostitId) {
@@ -181,11 +179,7 @@ export default class PostitView extends View {
     const top = Math.max(0, Math.min(originalTop, docHeight - height));
 
     if (originalLeft !== left || originalTop !== top) {
-      this.emit("adjustPosition",
-        postitId,
-        left,
-        top
-      );
+      this.emit("adjustPosition", postitId, left, top);
     }
 
     this._adjustSize($postit);
@@ -198,11 +192,7 @@ export default class PostitView extends View {
     const height = $postit.height();
 
     if (width > docWidth || height > docHeight) {
-      this.emit("adjustSize",
-        postitId,
-        Math.min(width, docWidth),
-        Math.min(height, docHeight)
-      );
+      this.emit("adjustSize", postitId, Math.min(width, docWidth), Math.min(height, docHeight));
     }
   }
   render(postit) {
@@ -210,14 +200,14 @@ export default class PostitView extends View {
     const $text = $postit.find("._text");
 
     if ($text.val() !== postit.text) {
-      $text.val(postit.text)
+      $text.val(postit.text);
     }
 
     $text.css({
       width: postit.width - 2,
       height: postit.height - 16,
       color: postit.textColor,
-      "font-size": `${postit.textSize}px`
+      "font-size": `${postit.textSize}px`,
     });
 
     $postit
@@ -225,40 +215,36 @@ export default class PostitView extends View {
       .text(`[${postit.timer}초 남음]`)
       .toggle(postit.timer >= 0);
 
-    $postit
-      .find("._title")
-      .text(postit.text.trim().split("\n")[0])
-      .css({
-        color: postit.textColor
-      });
+    $postit.find("._title").text(postit.text.trim().split("\n")[0]).css({
+      color: postit.textColor,
+    });
 
     if ($postit.is(":visible") && !this._draggingPostitId) {
-      $postit
-        .stop(true, true)
-        .animate({
+      $postit.stop(true, true).animate(
+        {
           left: postit.left,
-          top: postit.top
-        }, 100, () => {
+          top: postit.top,
+        },
+        100,
+        () => {
           this._adjustPosition($postit);
-        });
+        },
+      );
     } else {
-      $postit
-        .css({
-          left: postit.left,
-          top: postit.top
-        });
+      $postit.css({
+        left: postit.left,
+        top: postit.top,
+      });
       this._adjustPosition($postit);
     }
 
-    if (postit.timer &&
-      this._contextmenu.isVisible() &&
-      this._contextmenu.postitId === postit.id) {
+    if (postit.timer && this._contextmenu.isVisible() && this._contextmenu.postitId === postit.id) {
       this._contextmenu.update(postit);
     }
 
     $postit
       .css({
-        "z-index": postit.sort + 1000
+        "z-index": postit.sort + 1000,
       })
       .attr("data-bg-color", postit.bgColor)
       .toggleClass("fold", postit.fold)
@@ -275,11 +261,9 @@ export default class PostitView extends View {
   }
   updateZindex(postitIds) {
     postitIds.forEach((postitId, index) => {
-      this._$board
-        .find(`._postit[data-id='${postitId}']`)
-        .css({
-          "z-index": index + 1000
-        });
+      this._$board.find(`._postit[data-id='${postitId}']`).css({
+        "z-index": index + 1000,
+      });
     });
   }
 }

@@ -1,19 +1,16 @@
-import chai from 'chai';
-import PostitStore from '../PostitStore';
+import PostitStore from "../PostitStore";
 
-chai.should();
-
-describe('PostitStore', () => {
-  it('인스턴스를 정상적으로 생성한다.', () => {
+describe("PostitStore", () => {
+  it("인스턴스를 정상적으로 생성한다.", () => {
     // given
     // when
     const instance = new PostitStore({});
 
     // then
-    (instance instanceof PostitStore).should.be.true;
+    expect(instance instanceof PostitStore).toBe(true);
   });
 
-  it('포스트잇을 생성하여 목록에 추가한다.', () => {
+  it("포스트잇을 생성하여 목록에 추가한다.", () => {
     // given
     const instance = new PostitStore({});
 
@@ -25,10 +22,10 @@ describe('PostitStore', () => {
     instance.create({});
 
     // then
-    instance._list.length.should.be.eql(5);
+    expect(instance._list.length).toBe(5);
   });
 
-  it('특정 포스트잇이 맨 앞으로 오도록 정렬할 수 있다.', () => {
+  it("특정 포스트잇이 맨 앞으로 오도록 정렬할 수 있다.", () => {
     // given
     const instance = new PostitStore({});
     let postit;
@@ -42,11 +39,11 @@ describe('PostitStore', () => {
     // when
     let frontPostidId;
 
-    instance.toFront(postit.id, (sortedIds) => {
+    instance.toFront(postit.id, sortedIds => {
       frontPostidId = sortedIds.pop();
     });
 
     // then
-    frontPostidId.should.be.eql(postit.id);
+    expect(frontPostidId).toBe(postit.id);
   });
 });
